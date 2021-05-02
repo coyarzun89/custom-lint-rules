@@ -1,0 +1,80 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "dev.cristopher.customrules"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    // Android Lint (Optional)
+    lintOptions {
+        abortOnError true
+        warningsAsErrors true
+        // baseline project.file("baseline-lint.xml")
+    }
+}
+
+// Ktlint
+configurations {
+    ktlint
+}
+
+dependencies {
+    // Android Lint
+    lintChecks project(':android-lint-rules')
+
+    // Ktlint
+    ktlint "com.github.shyiko:ktlint:$ktlintVersion"
+    ktlint project(":ktlint-rules")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+}
+
+// Ktlint
+def outputDir = "${project.buildDir}/reports/ktlint/"
+
+task ktlint(type: JavaExec, group: "verification", description: "Runs ktlint.") {
+    main = "com.github.shyiko.ktlint.Main"
+    classpath = configurations.ktlint
+    args = [
+            "--reporter=plain",
+            "--reporter=checkstyle,output=${outputDir}ktlint-checkstyle-report.xml",
+            "src/**/*.kt"
+    ]
+
+    // To make this Gradle task incremental - https://medium.com/@vanniktech/making-your-gradle-tasks-incremental-7f26e4ef09c3
+    inputs.files(
+            fileTree(dir: "src", include: "**/*.kt"),
+            fileTree(dir: ".", include: "**/.editorconfig")
+    )
+    outputs.dir(outputDir)
+}

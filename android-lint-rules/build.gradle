@@ -1,0 +1,15 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'com.android.lint'
+
+
+dependencies {
+    // Android Lint
+    compileOnly "com.android.tools.lint:lint-api:$lintVersion"
+}
+
+jar {
+    manifest {
+        attributes("Lint-Registry-v2": "dev.cristopher.lint.DefaultIssueRegistry")
+    }
+}

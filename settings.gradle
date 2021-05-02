@@ -1,0 +1,4 @@
+include ':ktlint-rules'
+include ':android-lint-rules'
+include ':app'
+rootProject.name = "Custom Rules"
