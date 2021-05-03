@@ -18,7 +18,10 @@ class PrefixDefaultOnRepositoryRuleTest {
         )
 
         assertThat(findings).hasSize(1)
-        assertThat(findings[0].message).isEqualTo("The repository implementation 'BranchRepositoryImpl' needs to start with the prefix 'Default'.")
+        assertThat(findings[0].message).isEqualTo(
+            "The repository implementation " +
+                "'BranchRepositoryImpl' needs to start with the prefix 'Default'."
+        )
     }
 
     @Test fun correctPrefixOnRepositoryImplementation() {
