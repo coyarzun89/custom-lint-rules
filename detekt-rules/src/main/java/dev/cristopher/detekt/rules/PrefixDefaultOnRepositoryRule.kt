@@ -11,10 +11,9 @@ class PrefixDefaultOnRepositoryRule(config: Config = Config.empty) : Rule(config
     companion object {
         const val PREFIX_REPOSITORY = "Default"
         const val REPOSITORY_KEYWORD = "Repository"
-        const val RULE_ID = "PrefixDefaultOnRepositoryRule"
     }
     override val issue: Issue = Issue(
-        RULE_ID,
+        javaClass.simpleName,
         Severity.Style,
         "Use the prefix Default on every 'XXXRepository' implementations.",
         Debt.FIVE_MINS
