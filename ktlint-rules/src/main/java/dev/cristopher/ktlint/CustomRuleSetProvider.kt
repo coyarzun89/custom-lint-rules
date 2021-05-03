@@ -5,5 +5,7 @@ import com.github.shyiko.ktlint.core.RuleSetProvider
 import dev.cristopher.ktlint.rules.PrefixDataOnDtoModelsRule
 
 class CustomRuleSetProvider : RuleSetProvider {
-    override fun get() = RuleSet("custom-ktlint-rules", PrefixDataOnDtoModelsRule())
+    private val ruleSetId: String = "custom-ktlint-rules"
+
+    override fun get() = RuleSet(ruleSetId, PrefixDataOnDtoModelsRule())
 }

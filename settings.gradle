@@ -1,3 +1,4 @@
+include ':detekt-rules'
 include ':ktlint-rules'
 include ':android-lint-rules'
 include ':app'
