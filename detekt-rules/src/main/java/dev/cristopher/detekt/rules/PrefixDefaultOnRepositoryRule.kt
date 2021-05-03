@@ -23,16 +23,15 @@ class PrefixDefaultOnRepositoryRule(config: Config = Config.empty) : Rule(config
     override fun visitClassOrObject(classOrObject: KtClassOrObject) {
         for (superEntry in classOrObject.superTypeListEntries) {
             if (superEntry.text.endsWith(REPOSITORY_KEYWORD) &&
-                classOrObject.text.contains(REPOSITORY_KEYWORD) &&
-                !classOrObject.text.startsWith(PREFIX_REPOSITORY)
+                classOrObject.name?.contains(REPOSITORY_KEYWORD) == true &&
+                classOrObject.name?.startsWith(PREFIX_REPOSITORY) == false
             ) {
                 report(
                     classOrObject,
-                    "The repository implementation ${classOrObject.text} needs to start with the prefix 'Default'."
+                    "The repository implementation '${classOrObject.name}' needs to start with the prefix 'Default'."
                 )
             }
         }
-        super.visitClassOrObject(classOrObject)
     }
 
     private fun report(classOrObject: KtClassOrObject, message: String) {
