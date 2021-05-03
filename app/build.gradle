@@ -47,17 +47,8 @@ configurations {
 
 // detekt
 detekt {
-    input = files("$projectDir/app/src")
-    config = files("$projectDir/config/detekt.yml")
-    reports {
-        html {
-            enabled = true
-            destination = file("$projectDir/app/build/reports/detekt/detekt.html")
-        }
-        xml {
-            enabled = false
-        }
-    }
+    input = files("$rootDir/app/src")
+    config = files("$rootDir/app/config/detekt.yml")
 }
 
 dependencies {
@@ -70,6 +61,7 @@ dependencies {
 
     // Detekt
     detekt project(":detekt-rules")
+    detekt "io.gitlab.arturbosch.detekt:detekt-cli:$detektVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation 'androidx.core:core-ktx:1.3.2'
