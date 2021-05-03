@@ -1,17 +1,12 @@
 plugins {
-    id 'java-library'
     id 'kotlin'
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-repositories {
-    jcenter()
 }
 
 dependencies {
     compileOnly "com.github.shyiko.ktlint:ktlint-core:$ktlintVersion"
+
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.assertj:assertj-core:$assertjVersion"
+    testImplementation "com.github.shyiko.ktlint:ktlint-core:$ktlintVersion"
+    testImplementation "com.github.shyiko.ktlint:ktlint-test:$ktlintVersion"
 }

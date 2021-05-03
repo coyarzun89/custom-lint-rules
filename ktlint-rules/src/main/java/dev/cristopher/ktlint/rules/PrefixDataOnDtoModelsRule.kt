@@ -24,7 +24,7 @@ class PrefixDataOnDtoModelsRule : Rule("prefix-data-on-dto-model") {
                     if (it.elementType == ElementType.CLASS) {
                         val klass = it.psi as KtClass
                         if (klass.name?.startsWith(DATA_PREFIX, ignoreCase = true) != true) {
-                            emit(it.startOffset, "${klass.name} class is not using the prefix Data. Classes inside any 'data.dto' package should use that prefix", false)
+                            emit(it.startOffset, "'${klass.name}' class is not using the prefix Data. Classes inside any 'data.dto' package should use that prefix", false)
                         }
                     }
                 }
