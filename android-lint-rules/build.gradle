@@ -6,6 +6,9 @@ apply plugin: 'com.android.lint'
 dependencies {
     // Android Lint
     compileOnly "com.android.tools.lint:lint-api:$lintVersion"
+
+    testImplementation "com.android.tools.lint:lint:$lintVersion"
+    testImplementation "com.android.tools.lint:lint-tests:$lintVersion"
 }
 
 jar {

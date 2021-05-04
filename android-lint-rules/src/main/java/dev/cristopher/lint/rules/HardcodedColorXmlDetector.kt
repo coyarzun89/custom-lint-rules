@@ -4,17 +4,19 @@ import com.android.tools.lint.detector.api.*
 import org.w3c.dom.Attr
 
 @Suppress("UnstableApiUsage")
-class HardcodedHexColorXmlDetector : LayoutDetector() {
+class HardcodedColorXmlDetector : LayoutDetector() {
 
     companion object {
+        val REGEX_HEX_COLOR = "#[a-fA-F\\d]{3,8}".toRegex()
+
         val ISSUE = Issue.create(
-            id = "HardcodedHexColorXml",
-            briefDescription = "Prohibits hardcoded hex colors in layout XML",
-            explanation = "Hardcoded hex colors should be declared as a `<color>` resource",
+            id = "HardcodedColorXml",
+            briefDescription = "Prohibits hardcoded colors in layout XML",
+            explanation = "Hardcoded colors should be declared as a '<color>' resource",
             category = Category.CORRECTNESS,
             severity = Severity.ERROR,
             implementation = Implementation(
-                HardcodedHexColorXmlDetector::class.java,
+                HardcodedColorXmlDetector::class.java,
                 Scope.RESOURCE_FILE_SCOPE
             )
         )
@@ -31,17 +33,13 @@ class HardcodedHexColorXmlDetector : LayoutDetector() {
     override fun visitAttribute(context: XmlContext, attribute: Attr) {
         // Get the value of the XML attribute.
         val attributeValue = attribute.nodeValue
-
-        if (!attributeValue.startsWith("#")) {
-            // Do nothing if the attribute value isn't a hex color.
-            return
+        if (attributeValue.matches(REGEX_HEX_COLOR)) {
+            context.report(
+                issue = ISSUE,
+                scope = attribute,
+                location = context.getValueLocation(attribute),
+                message = "Hardcoded hex colors should be declared in a '<color>' resource."
+            )
         }
-
-        context.report(
-            issue = ISSUE,
-            scope = attribute,
-            location = context.getValueLocation(attribute),
-            message = "Hardcoded hex colors should be declared in a `<color>` resource."
-        )
     }
 }
