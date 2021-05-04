@@ -1,18 +1,10 @@
 package dev.cristopher.lint.rules
 
-import com.android.resources.ResourceFolderType
-import com.android.tools.lint.detector.api.Category
-import com.android.tools.lint.detector.api.Implementation
-import com.android.tools.lint.detector.api.Issue
-import com.android.tools.lint.detector.api.ResourceXmlDetector
-import com.android.tools.lint.detector.api.Scope
-import com.android.tools.lint.detector.api.Severity
-import com.android.tools.lint.detector.api.XmlContext
-import com.android.tools.lint.detector.api.XmlScannerConstants
+import com.android.tools.lint.detector.api.*
 import org.w3c.dom.Attr
 
 @Suppress("UnstableApiUsage")
-class HardcodedHexColorXmlDetector : ResourceXmlDetector() {
+class HardcodedHexColorXmlDetector : LayoutDetector() {
 
     companion object {
         val ISSUE = Issue.create(
@@ -26,12 +18,6 @@ class HardcodedHexColorXmlDetector : ResourceXmlDetector() {
                 Scope.RESOURCE_FILE_SCOPE
             )
         )
-    }
-
-    override fun appliesTo(folderType: ResourceFolderType): Boolean {
-        // Return true if we want to analyze resource files in the specified resource
-        // folder type. In this case we only need to analyze layout resource files.
-        return folderType == ResourceFolderType.LAYOUT
     }
 
     override fun getApplicableAttributes(): Collection<String>? {
