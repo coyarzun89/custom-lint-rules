@@ -34,7 +34,6 @@ android {
 
     // Android Lint (Optional)
     lintOptions {
-        abortOnError true
         warningsAsErrors true
         // baseline project.file("baseline-lint.xml")
     }
@@ -71,9 +70,10 @@ dependencies {
 }
 
 
-def outputDir = "${project.buildDir}/reports/ktlint/"
 
 task ktlint(type: JavaExec, group: "verification", description: "Runs ktlint.") {
+    def outputDir = "${project.buildDir}/reports/ktlint/"
+
     main = "com.github.shyiko.ktlint.Main"
     classpath = configurations.ktlint
     args = [
@@ -82,7 +82,6 @@ task ktlint(type: JavaExec, group: "verification", description: "Runs ktlint.") 
             "src/**/*.kt"
     ]
 
-    // To make this Gradle task incremental - https://medium.com/@vanniktech/making-your-gradle-tasks-incremental-7f26e4ef09c3
     inputs.files(
             fileTree(dir: "src", include: "**/*.kt"),
             fileTree(dir: ".", include: "**/.editorconfig")
