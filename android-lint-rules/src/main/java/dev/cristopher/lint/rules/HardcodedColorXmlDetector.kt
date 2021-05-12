@@ -4,7 +4,7 @@ import com.android.tools.lint.detector.api.*
 import org.w3c.dom.Attr
 
 @Suppress("UnstableApiUsage")
-class HardcodedColorXmlDetector : LayoutDetector() {
+class HardcodedColorXmlDetector : ResourceXmlDetector() {
 
     companion object {
         val REGEX_HEX_COLOR = "#[a-fA-F\\d]{3,8}".toRegex()
@@ -25,8 +25,8 @@ class HardcodedColorXmlDetector : LayoutDetector() {
     override fun getApplicableAttributes(): Collection<String>? {
         // Return the set of attribute names we want to analyze. The `visitAttribute` method
         // below will be called each time lint sees one of these attributes in a
-        // layout XML resource file. In this case, we want to analyze every attribute
-        // in every layout XML resource file.
+        // XML resource file. In this case, we want to analyze every attribute
+        // in every XML resource file.
         return XmlScannerConstants.ALL
     }
 
